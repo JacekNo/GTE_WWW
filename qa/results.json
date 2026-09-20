@@ -1,0 +1,231 @@
+{
+  "browser": "Chrome 154",
+  "date": "2026-09-20",
+  "checks": [
+    {
+      "name": "46 map cities",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Fonts 400/600/700 loaded",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Keyboard skip link + visible outline",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Map hover label",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Selection persists after pointer leaves",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Hover another city preserves selection",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Tooltip restores selected city",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Escape clears selection and tooltip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Keyboard Enter selects Katowice",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Arrow key moves map focus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Space selects focused city",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Escape from focused pin clears",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440: no overflow / cropped copy / broken assets",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "broken": 0,
+        "crop": []
+      }
+    },
+    {
+      "name": "1440: all map pin hit targets including Silesia",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1440: all 46 tooltip edge positions",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1440: short and long copy reflows",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1280: no overflow / cropped copy / broken assets",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "broken": 0,
+        "crop": []
+      }
+    },
+    {
+      "name": "1280: all map pin hit targets including Silesia",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1280: all 46 tooltip edge positions",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1280: short and long copy reflows",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768: no overflow / cropped copy / broken assets",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "broken": 0,
+        "crop": []
+      }
+    },
+    {
+      "name": "768: all map pin hit targets including Silesia",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "768: all 46 tooltip edge positions",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "768: short and long copy reflows",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390: no overflow / cropped copy / broken assets",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "broken": 0,
+        "crop": []
+      }
+    },
+    {
+      "name": "390: all map pin hit targets including Silesia",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390: all 46 tooltip edge positions",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Mobile tap selects",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile list selects Silesia city",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile menu opens",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile Escape returns focus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Menu Tab stays inside navigation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile menu link closes + focuses section",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390: short and long copy reflows",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Reduced motion reveals all content immediately",
+      "pass": true,
+      "detail": {
+        "matches": true,
+        "hidden": 0,
+        "smooth": "auto"
+      }
+    },
+    {
+      "name": "1440: photo hero loads and stays within viewport",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390: photo hero loads and stays within viewport",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Quick scroll reveals destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Mid-page reload reveals visible content",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No JS: content and mobile navigation remain accessible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No JS exceptions or failed HTTP assets",
+      "pass": true,
+      "detail": []
+    }
+  ]
+}

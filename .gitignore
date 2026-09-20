@@ -1,0 +1,16 @@
+qa/*-profile/
+*-source.tmp
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+
+# Build / dependencies
+node_modules/
+dist/
+
+# Environment
+.env
+.env.*

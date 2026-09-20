@@ -1,0 +1,12 @@
+import {cdp,evaluate,revealAll,screenshot,pause,close,navigate} from './cdp.mjs';
+import {writeFile} from 'node:fs/promises';
+await navigate();await revealAll();
+const data=await evaluate('({innerWidth,innerHeight,outerWidth,outerHeight,devicePixelRatio,visualScale:visualViewport.scale,overflow:document.documentElement.scrollWidth>innerWidth})');
+data.actualPageZoom=(await cdp('Page.getLayoutMetrics')).visualViewport.zoom;
+data.croppedCopy=await evaluate("[...document.querySelectorAll('h1,h2,p,dt,dd,address')].filter(e=>e.scrollWidth>e.clientWidth+2).map(e=>e.textContent.trim())");
+data.pass=data.actualPageZoom===1.25&&!data.overflow&&!data.croppedCopy.length;
+console.log(data);
+await screenshot('zoom-125',true);await screenshot('zoom-125-hero');
+await writeFile('qa/zoom.json',JSON.stringify(data,null,2));
+close();
+if(!data.pass)process.exitCode=1;

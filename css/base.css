@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../assets/Mark Simonson - Proxima Nova.otf") format("opentype");
+  font-style: normal; font-weight: 400; font-display: swap;
+}
+/* The supplied Semibold face fills the medium UI role; see README. */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../assets/Mark Simonson - Proxima Nova Semibold.otf") format("opentype");
+  font-style: normal; font-weight: 600; font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../assets/Mark Simonson - Proxima Nova Bold.otf") format("opentype");
+  font-style: normal; font-weight: 700; font-display: swap;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body { margin: 0; background: var(--gte-surface); color: var(--gte-text); font-family: var(--font-sans); font-size: var(--body); font-weight: 400; font-synthesis: none; line-height: 1.5; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+body.menu-open { overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select { font: inherit; }
+button { color: inherit; cursor: pointer; }
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-weight: 400; letter-spacing: -.04em; line-height: 1.04; text-wrap: balance; }
+h2 { font-size: var(--h2); }
+h3 { font-size: var(--h3); }
+p { max-width: 64ch; }
+::selection { background: var(--gte-green); color: var(--gte-navy); }
+:focus-visible { outline: 3px solid var(--focus-color, var(--gte-navy)); outline-offset: 6px; }
+.skip-link { position: fixed; z-index: 1000; left: 1rem; top: 1rem; padding: .75rem 1rem; background: white; color: var(--gte-navy); transform: translateY(-180%); }
+.skip-link:focus { transform: none; }
+.shell { width: var(--shell); margin-inline: auto; }
+.shell--wide { width: var(--shell-wide); }
+.section { padding-block: var(--section-space); }
+.section--compact { padding-block: var(--section-space-compact); }
+.section--navy { --focus-color: var(--gte-green); background: var(--gte-navy); color: var(--gte-white); }
+.eyebrow { font-size: var(--body-small); font-weight: var(--weight-medium); margin-bottom: 1.75rem; }
+.section--navy .eyebrow { color: var(--gte-green); }
+.lead { font-size: var(--body-large); line-height: 1.4; letter-spacing: -.015em; }
+.section-heading { display: grid; grid-template-columns: 1.5fr 1fr; align-items: end; gap: 4rem; margin-bottom: 4.5rem; }
+.section-heading > p { color: var(--gte-text-muted); max-width: 34ch; }
+.section-heading--light > p { color: #d5dced; }
+@media (max-width: 800px) {
+  .section-heading { grid-template-columns: 1fr; gap: 1.75rem; margin-bottom: 3rem; }
+}
