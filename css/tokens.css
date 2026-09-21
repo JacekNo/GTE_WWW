@@ -7,6 +7,7 @@
   --gte-text: var(--gte-navy);
   --gte-text-muted: #59616f;
   --gte-line: #d5dadf;
+  --gte-text-on-navy-muted: #d5dced;
   --font-sans: "Proxima Nova", "Segoe UI", Arial, sans-serif;
   --h1: clamp(3.5rem, 8.4vw, 8rem);
   --h2: clamp(2.75rem, 4.8vw, 4.5rem);
@@ -20,10 +21,14 @@
   --section-space: clamp(5.5rem, 9vw, 8.5rem);
   --section-space-compact: clamp(4rem, 6vw, 5.5rem);
   --gutter: clamp(1.5rem, 4.2vw, 4rem);
-  --shell: min(1180px, calc(100% - var(--gutter) * 2));
-  --shell-wide: min(1320px, calc(100% - var(--gutter) * 2));
+  --shell-max: 1180px;
+  --shell-wide-max: 1320px;
+  --shell: min(var(--shell-max), calc(100% - var(--gutter) * 2));
+  --shell-wide: min(var(--shell-wide-max), calc(100% - var(--gutter) * 2));
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 200ms;
   --duration-base: 650ms;
+  --header-height: 100px;
+  --header-height-compact: 80px;
 }

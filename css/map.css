@@ -1,0 +1,163 @@
+/* Interactive reach map ---------------------------------------------------- */
+.map {
+  width: 100%;
+  isolation: isolate;
+}
+
+.map__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 739 / 687;
+}
+
+.map__graphic {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.map__pins {
+  position: absolute;
+  inset: 0;
+}
+
+.map-city {
+  position: absolute;
+  z-index: 2;
+  left: var(--x);
+  top: var(--y);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f7f8fb;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+}
+
+.map-city::after {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--gte-green);
+  border-radius: 50%;
+  content: "";
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity var(--duration-fast),
+    transform var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast);
+}
+
+.map-city__glyph {
+  width: 18px;
+  height: 16px;
+  overflow: visible;
+  fill: currentColor;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.map-city:is(:hover, :focus-visible, .is-highlighted, .is-selected) {
+  color: var(--gte-green);
+}
+
+.map-city:is(:hover, :focus-visible, .is-highlighted, .is-selected)::after {
+  opacity: 0.8;
+  transform: scale(1);
+}
+
+.map-city:is(:hover, :focus-visible, .is-highlighted, .is-selected) .map-city__glyph {
+  transform: scale(1.14);
+}
+
+.map-city:focus-visible {
+  outline: none;
+}
+
+.map-city:focus-visible::after {
+  border-color: var(--gte-white);
+  border-width: 2.5px;
+  opacity: 1;
+}
+
+.map-tooltip {
+  --tooltip-x: 50%;
+  --tooltip-y: 50%;
+  position: absolute;
+  z-index: 5;
+  top: var(--tooltip-y);
+  left: var(--tooltip-x);
+  max-width: calc(100% - 1rem);
+  padding: 0.6rem 1rem;
+  background: var(--gte-green);
+  color: var(--gte-navy);
+  font-size: var(--body-small);
+  line-height: 1.25;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 1rem));
+  transition: opacity 160ms;
+}
+
+.map-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.map-tooltip.is-below {
+  transform: translate(-50%, 1rem);
+}
+
+.map-tooltip strong {
+  font-weight: var(--weight-bold);
+}
+
+.map-picker {
+  display: none;
+}
+
+.map__noscript {
+  margin-top: 1rem;
+  color: var(--gte-text-muted);
+  font-size: var(--body-small);
+}
+
+@media (max-width: 800px) {
+  .map {
+    max-width: 680px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 540px) {
+  .map-picker {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    font-size: var(--body-small);
+  }
+
+  .map-picker select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem;
+    background: var(--gte-white);
+    color: var(--gte-navy);
+    border: 1px solid var(--gte-line);
+    border-radius: 0;
+  }
+
+  .map-city {
+    width: 30px;
+    height: 30px;
+  }
+}
