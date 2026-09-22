@@ -1,70 +1,153 @@
-# GTE — Visual & UX Redesign
+# GTE — WWW
 
-Strona Grupy TEB Edukacja: semantic HTML, native CSS i vanilla JavaScript. Bez frameworka, bundlera i zależności runtime.
+Koncepcyjny frontend strony Grupy TEB Edukacja. Projekt jest statycznym onepagerem zbudowanym w semantic HTML, native CSS i vanilla JavaScript — bez frameworka, bundlera i zależności runtime.
 
-## Uruchomienie
+## Uruchomienie lokalne
+
+Ze względu na ES Modules stronę należy uruchamiać przez lokalny serwer HTTP, a nie bezpośrednio przez `file://`.
 
 ```powershell
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
-Otwórz http://127.0.0.1:4173/. Raport i screenshoty: [qa/QA.md](qa/QA.md).
+Następnie otwórz:
 
-## Struktura
+```text
+http://127.0.0.1:4173/
+```
 
-- `index.html` — treść, sekcje i oryginalna geometria interaktywnej mapy.
-- `css/tokens.css` — kolor, typografia, standardowy i kompaktowy rytm sekcji.
-- `css/base.css` — dostarczone fonty, semantyczne podstawy i dostępność.
-- `css/layout.css` — komponenty i responsywność; zastępuje poprzednie warianty CSS.
-- `css/motion.css` — reveal treści, draw linii, aktywacja punktów, reduced motion.
-- `js/motion.js` — istniejący model hover/focus/selection mapy, pozycjonowanie tooltipów, menu i IntersectionObserver. Lista miast na telefonie używa tego samego stanu wyboru co mapa.
+## Struktura projektu
+
+```text
+/
+├── index.html
+├── css/
+│   ├── tokens.css
+│   ├── base.css
+│   ├── layout.css
+│   ├── map.css
+│   └── motion.css
+├── js/
+│   ├── main.js
+│   ├── map.js
+│   └── map-data.js
+├── assets/
+│   ├── graphics/
+│   ├── logo/
+│   ├── maps/
+│   ├── partners/
+│   └── photos/
+└── qa/
+```
+
+### Odpowiedzialności
+
+- `index.html` — semantyczna struktura strony i treść.
+- `css/tokens.css` — kolory, typografia, spacing, szerokości i timing.
+- `css/base.css` — font-face, reset, elementy bazowe i accessibility.
+- `css/layout.css` — layout sekcji, komponenty i responsywność.
+- `css/map.css` — wygląd mapy, pinów, tooltipu i mobile picker.
+- `css/motion.css` — progressive enhancement animacji i reduced motion.
+- `js/main.js` — nawigacja, header, scrollspy, focus management i reveal.
+- `js/map.js` — interakcje mapy: piny, tooltip, selection i keyboard navigation.
+- `js/map-data.js` — dane 46 miast i ich współrzędne.
+- `assets/maps/poland-map.svg` — geometria mapy Polski.
+
+## Mapa
+
+Mapa została rozdzielona na trzy warstwy:
+
+1. geometria — `assets/maps/poland-map.svg`,
+2. dane — `js/map-data.js`,
+3. interakcja — `js/map.js`.
+
+Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 markerów.
+
+## Hero
+
+Aktualny wariant używa:
+
+```text
+assets/photos/approved-photo.png
+```
+
+Zdjęcie jest warstwą wizualną hero. Tekst i CTA pozostają niezależne od assetu.
+
+## Partnerzy
+
+Aktualna lista w UI obejmuje:
+
+- Semilac Professional,
+- Bielenda Professional,
+- Schwarzkopf Professional,
+- Ecolab,
+- Kamsoft,
+- Intel,
+- Canon,
+- Cisco Networking Academy Partner,
+- iSpot Apple Premium Education Partner,
+- InsERT,
+- MSI Polska.
+
+Dla iSpot używany jest tymczasowy fallback tekstowy. Przed finalnym wdrożeniem należy podmienić go na oficjalny asset partnera.
+
+## Dane do potwierdzenia
+
+W sekcji „GTE w liczbach” pozostają dwa jawne placeholdery:
+
+- liczba szkół policealnych,
+- liczba szkół średnich.
+
+W `index.html` są oznaczone komentarzem `TODO`. Nie należy traktować wartości `xx` jako danych produkcyjnych.
+
+## Kontakt
+
+Aktualny kontakt w UI:
+
+- Grupa TEB Edukacja,
+- Centrala TEB Edukacja,
+- ul. Pastelowa 16, 60-198 Poznań,
+- +48 61 667 01 74,
+- centrala@teb-edukacja.pl.
 
 ## Typografia
 
-Używane są trzy dostarczone lokalne pliki Proxima Nova w `assets`: Regular **400**, Semibold **600**, Bold **700**. Plik opisany jako Semibold ma faktyczną wagę 600; nie jest odmianą Medium 500. Dlatego środkowa rola typograficzna (`--weight-medium`) korzysta jawnie z 600. Po dostarczeniu Medium wystarczy podmienić źródło odpowiedniego `@font-face`, jego wagę oraz token na 500. Font synthesis jest wyłączony; strona nie pobiera fontów z zewnętrznych usług.
+Projekt korzysta z lokalnych plików Proxima Nova 400 / 600 / 700.
 
-## Hero z fotografią i bez niej
+> **Handoff / produkcja:** przed dalszą publiczną dystrybucją lub wdrożeniem należy potwierdzić warunki licencji webowej i sposób hostowania fontów. Obecne pliki OTF są assetami roboczymi projektu.
 
-Domyślny, finalny wariant to **brand-only**. Aby włączyć zdjęcie, dodaj jako pierwsze dziecko `.hero`:
+## Accessibility / progressive enhancement
 
-```html
-<img class="hero__photo" src="assets/photos/approved-photo.jpg" alt="" />
-```
+Projekt zawiera m.in.:
 
-Zdjęcie jest dekoracyjnym tłem: layout, headline i kontrolka przewijania nie zmieniają struktury. CSS automatycznie nakłada navy treatment i wycisza linię. Kadr można ustawić przez `--hero-photo-position: 60% center` na hero. Nie należy dodawać klasy bez faktycznego obrazu.
-
-Alternatywnie, przy hero bez zdjęcia, w `.about__grid` przygotowany jest slot:
-
-```html
-<figure class="about__photo" data-reveal>
-  <img src="assets/photos/approved-team.jpg" alt="Opis zatwierdzonego zdjęcia zespołu lub siedziby" loading="lazy" />
-</figure>
-```
-
-Nie ma pustego placeholdera w widoku strony. Plik `qa/photo-fixture.jpg` służy wyłącznie testom; nie jest zdjęciem siedziby lub zespołu GTE i nie występuje w finalnym HTML.
-
-## Źródła uzupełnionych assetów i kontaktu
-
-- Oryginalne logotypy GTE / FORTEB / TEB / EDICON oraz mapa i sygnet: istniejące repo.
-- Partnerzy: osiem oficjalnych SVG pobranych z [teb.pl](https://teb.pl/), ścieżka `/assets/partners/teb-edukacja-partner-{marka}.svg`. Nazwy partnerów zachowane z dotychczasowej strony. Logo files: semilac, bielenda, schwarzkopf, microsoft, canon, cisco, insert, inglot.
-- Kontakt centrali: [oficjalna strona kontaktowa TEB](https://teb.pl/kontakt/), odczyt 20.09.2026: ul. Pastelowa 16, 60-198 Poznań; +48 61 667 01 74; centrala@teb-edukacja.pl. W UI dane są opisane jako kontakt do centrali TEB Edukacja.
-- Wyłącznie testowe zdjęcie: [oficjalny zasób TEB — organizacja i zarządzanie](https://teb.pl/wp-content/uploads/2023/01/teb-edukacja-branza-organiazacja-i-zarzadzanie-720x480.jpg).
-- Liczby i pozostałe informacje zachowano zgodnie z briefem i istniejącą treścią; redesign nie jest audytem aktualności danych biznesowych.
+- skip link,
+- focus-visible,
+- obsługę menu klawiaturą i Escape,
+- roving tabindex na mapie,
+- natywny picker miasta na mobile,
+- `prefers-reduced-motion`,
+- wersję strony działającą również bez JavaScriptu.
 
 ## QA
 
-Skrypty `qa/*.mjs` używają wbudowanego WebSocket/fetch w Node 22 i Chrome DevTools Protocol. Nie dodają zależności do strony. Chrome testowy działa na porcie 9223 z osobnym profilem, serwer na 4173.
+Materiały w `qa/` dokumentują wcześniejszy pełny przebieg testów Chrome. Po późniejszych zmianach treści, partnerów, kontaktu i assetów traktuj screenshoty jako **baseline**, a nie jako aktualny golden master.
+
+Przed finalnym wdrożeniem zalecane jest ponowne uruchomienie:
 
 ```powershell
-node --check js/motion.js
+node --check js/main.js
+node --check js/map.js
 node qa/verify.mjs
 node qa/render.mjs
 ```
 
-Test 125% uruchamiany jest na osobnym profilu Chrome (port 9224). Rzeczywisty page zoom ustawiony w Preferences: `partition.default_zoom_level.x = log(1.25) / log(1.2)`. Potwierdzenie pomiaru: `devicePixelRatio = 1.25`, `visualViewport.scale = 1`, `innerWidth = 1139` przy oknie 1440 px. Nie użyto CSS zoom ani emulacji pinch-to-zoom.
+Szczegóły: [qa/QA.md](qa/QA.md).
 
-```powershell
-$env:CDP_PORT = '9224'
-node qa/zoom.mjs
-Remove-Item Env:\CDP_PORT
-```
+## Handoff
+
+Projekt jest celowo prosty i bez procesu build. Developer może:
+
+- wdrożyć go bezpośrednio jako statyczny frontend,
+- przepisać sekcje do istniejącego CMS/frameworka,
+- zachować obecne klasy i tokeny jako referencję wizualną,
+- potraktować `map-data.js` jako źródło danych dla mapy w docelowym stacku.
