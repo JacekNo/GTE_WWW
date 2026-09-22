@@ -1,5 +1,7 @@
 # Visual & UX QA — GTE
 
+> **Status dokumentu:** baseline QA z 20.09.2026. Po tym przebiegu zaktualizowano m.in. treści, partnerów, kontakt, hero i strukturę mapy. Screenshoty i 41/41 PASS dokumentują stan bazowy i powinny zostać ponownie wygenerowane przed finalnym wdrożeniem.
+
 20.09.2026 · Chrome 154 · lokalna strona HTTP · rzeczywiste rendery przeglądarki.
 
 ## Wynik
@@ -36,11 +38,11 @@ W 125% potwierdzono rzeczywisty `page zoom = 1.25` oraz `devicePixelRatio = 1.25
 
 ## Hero i Visual QA
 
-Finalny hero pozostaje **brand-only**, zgodnie z informacją o braku zatwierdzonego zdjęcia. Wariant photo-enabled sprawdzono osobno przy użyciu testowego zdjęcia ze strony TEB: [desktop](hero-photo-1440.png), [mobile](hero-photo-390.png). Zdjęcie nie występuje na stronie docelowej i nie jest prezentowane jako rzeczywisty zespół GTE.
+Baseline QA obejmował wariant brand-only oraz wariant ze zdjęciem. Aktualny HTML korzysta z `assets/photos/approved-photo.png` jako warstwy hero, dlatego screenshoty bazowe mogą różnić się od bieżącego widoku.
 
 Po pierwszym renderze skorygowano linię hero, która przechodziła za CTA. Statystyki mają wyraźny poziom danych o ludziach i spokojniejszy poziom infrastruktury. Trzy podmioty mają wspólną linię oraz wyrównane logotypy i opisy; partnerzy tworzą otwarte pole znaków o różnych proporcjach. Mapa navy ma białe piny i granice, aktywny punkt i tooltip są zielone. Kontakt jest prostą sekcją dwóch kolumn, a na telefonie jedną kolumną.
 
-Sekwencja mapy: outline 0–750 ms → boundaries 450–850 ms → pins 900–1700 ms. Motion jest jednorazowy; reduced motion go wyłącza.
+Aktualna mapa ma geometrię w osobnym `assets/maps/poland-map.svg`, dane miast w `js/map-data.js` i interakcje w `js/map.js`. Motion pozostaje progressive enhancement; reduced motion go wyłącza.
 
 ## Ustalenia materiałowe
 
