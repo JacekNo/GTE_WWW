@@ -409,6 +409,29 @@
   filter: grayscale(0);
   opacity: 1;
 }
+
+.partner-list__fallback {
+  display: grid;
+  place-items: center;
+  gap: 0.2rem;
+  width: 100%;
+  max-width: 170px;
+  min-height: 76px;
+  color: rgb(23 47 107 / 56%);
+  text-align: center;
+  line-height: 1.15;
+}
+
+.partner-list__fallback strong {
+  font-size: 1.35rem;
+  font-weight: var(--weight-medium);
+}
+
+.partner-list__fallback small {
+  max-width: 18ch;
+  font-size: 0.72rem;
+  font-weight: var(--weight-regular);
+}
 .partner--canon img {
   max-width: 145px;
 }
