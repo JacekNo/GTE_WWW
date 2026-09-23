@@ -63,6 +63,42 @@ jobs:
       - name: Render QA screenshots
         run: node qa/render.mjs
 
+      - name: Measure direct mobile web vitals
+        run: |
+          node --input-type=module <<'NODE'
+          import { cdp, viewport, navigate, evaluate, pause, close } from "./qa/cdp.mjs";
+
+          await cdp("Page.addScriptToEvaluateOnNewDocument", {
+            source: `
+              window.__qaPerf = { cls: 0, lcp: 0 };
+              new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                  if (!entry.hadRecentInput) window.__qaPerf.cls += entry.value;
+                }
+              }).observe({ type: "layout-shift", buffered: true });
+
+              new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const last = entries[entries.length - 1];
+                if (last) window.__qaPerf.lcp = last.startTime;
+              }).observe({ type: "largest-contentful-paint", buffered: true });
+            `,
+          });
+
+          await viewport(390, 844, true);
+          await navigate();
+          await pause(1500);
+
+          const result = await evaluate(`({
+            cls: window.__qaPerf?.cls ?? null,
+            lcp: window.__qaPerf?.lcp ?? null,
+            fcp: performance.getEntriesByName("first-contentful-paint")[0]?.startTime ?? null
+          })`);
+
+          console.log("DIRECT_MOBILE_VITALS", JSON.stringify(result));
+          close();
+          NODE
+
       - name: Run Lighthouse desktop
         run: |
           npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/             --quiet             --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage"             --preset=desktop             --output=json             --output-path=/tmp/lighthouse-desktop.json
