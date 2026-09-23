@@ -1,5 +1,11 @@
 # Visual & UX QA — GTE
 
+> **Finalny clean baseline — 23.09.2026:** automatyczny browser QA zakończony wynikiem **37/37 PASS**. Syntax checks, rendery kontrolne, brak overflow/cropped copy/broken assets, mapa, mobile menu, reduced motion, no-JS i hero AVIF — PASS.
+>
+> **Lighthouse desktop:** Performance 99, Accessibility 100, Best Practices 100, SEO 100; LCP 0.9 s, CLS 0.004, TBT 0 ms.
+>
+> **Lighthouse mobile (synthetic, lokalny Python HTTP server):** Performance 62, Accessibility 100, Best Practices 100, SEO 100; raportowany LCP 5.0 s i CLS 0.242. Kontrolny pomiar przez `PerformanceObserver` w stabilnym viewportcie 390 × 844 dał **CLS 0, FCP 104 ms, LCP 156 ms**. Mobilny wynik Lighthouse należy więc traktować jako konserwatywny wynik syntetycznego throttlingu na niekompresowanym serwerze testowym i ponownie zweryfikować po wdrożeniu na docelowym hostingu.
+
 > **Status dokumentu:** screenshoty i wynik 41/41 pochodzą z baseline QA z 20.09.2026 i są materiałem historycznym. Skrypt `verify.mjs` został zsynchronizowany z bieżącym DOM w ramach clean baseline 23.09.2026, ale screenshoty i `results.json` należy wygenerować ponownie przed uznaniem ich za aktualny golden master.
 
 20.09.2026 · Chrome 154 · lokalna strona HTTP · rzeczywiste rendery przeglądarki.
