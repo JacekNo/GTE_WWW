@@ -248,6 +248,11 @@
   margin: 0;
 }
 
+.numbers .section-heading > p {
+  font-size: clamp(1.2rem, 1.4vw, 1.4rem);
+  line-height: 1.45;
+}
+
 .numbers-field__people {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -809,7 +814,7 @@
   }
 
   .entity__brand {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 
   .entity__brand img {
