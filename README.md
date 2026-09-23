@@ -49,7 +49,7 @@ http://127.0.0.1:4173/
 - `css/map.css` — wygląd mapy, pinów, tooltipu i mobile picker.
 - `css/motion.css` — progressive enhancement animacji i reduced motion.
 - `js/main.js` — nawigacja, header, scrollspy, focus management i reveal.
-- `js/map.js` — interakcje mapy: piny, tooltip, selection i keyboard navigation.
+- `js/map.js` — interakcje mapy: wizualne piny, tooltip na hover oraz picker miasta na mobile.
 - `js/map-data.js` — dane 46 miast i ich współrzędne.
 - `assets/maps/poland-map.svg` — geometria mapy Polski.
 
@@ -61,17 +61,21 @@ Mapa została rozdzielona na trzy warstwy:
 2. dane — `js/map-data.js`,
 3. interakcja — `js/map.js`.
 
-Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 markerów.
+Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 markerów. Piny są informacyjne: na desktopie pokazują nazwę miasta po najechaniu, nie mają stanu kliknięcia ani zachowania przycisku. Na mobile wybór miasta odbywa się przez natywny `select`.
 
 ## Hero
 
-Aktualny wariant używa:
+Hero jest dekoracyjnym tłem CSS i korzysta z `image-set()` oraz trzech produkcyjnych formatów:
 
 ```text
-assets/photos/approved-photo.png
+assets/photos/hero-gte.avif
+assets/photos/hero-gte.webp
+assets/photos/hero-gte.jpg
 ```
 
-Zdjęcie jest warstwą wizualną hero. Tekst i CTA pozostają niezależne od assetu.
+Źródłowy `assets/photos/approved-photo.png` pozostaje w repo jako materiał roboczy, ale nie jest pobierany przez stronę. Przeglądarka wybiera AVIF, następnie WebP, a JPEG pełni rolę fallbacku. AVIF jest preloadowany jako asset hero, a kadr pozostaje ten sam dzięki `background-size: cover` i `background-position`.
+
+Nie używamy mniejszych wariantów szerokości dla tego hero: źródło jest bardzo panoramiczne, a kontener na mobile jest wysoki. Wariant 960 px miałby tylko około 411 px wysokości i byłby niepotrzebnie skalowany w górę. Przy AVIF około 170 KB pełna rozdzielczość daje lepszy kompromis jakości i transferu.
 
 ## Partnerzy
 
@@ -93,12 +97,11 @@ Dla iSpot używany jest tymczasowy fallback tekstowy. Przed finalnym wdrożeniem
 
 ## Dane do potwierdzenia
 
-W sekcji „GTE w liczbach” pozostają dwa jawne placeholdery:
+W sekcji „GTE w liczbach” pozostaje jeden jawny placeholder:
 
-- liczba szkół policealnych,
-- liczba szkół średnich.
+- liczba pracowników.
 
-W `index.html` są oznaczone komentarzem `TODO`. Nie należy traktować wartości `xx` jako danych produkcyjnych.
+W `index.html` wartość `0 000` jest oznaczona komentarzem `TODO` i nie należy traktować jej jako danych produkcyjnych.
 
 ## Kontakt
 
@@ -123,14 +126,18 @@ Projekt zawiera m.in.:
 - skip link,
 - focus-visible,
 - obsługę menu klawiaturą i Escape,
-- roving tabindex na mapie,
+- informacyjne piny mapy bez fałszywej semantyki przycisku,
 - natywny picker miasta na mobile,
 - `prefers-reduced-motion`,
 - wersję strony działającą również bez JavaScriptu.
 
+## Metadata / SEO
+
+W `index.html` znajdują się bezpieczne metadane niewymagające finalnej domeny: description, theme color oraz podstawowe Open Graph. Po ustaleniu docelowego adresu należy uzupełnić canonical, `og:url`, absolutny `og:image` i dane `Organization` w JSON-LD.
+
 ## QA
 
-Materiały w `qa/` dokumentują wcześniejszy pełny przebieg testów Chrome. Po późniejszych zmianach treści, partnerów, kontaktu i assetów traktuj screenshoty jako **baseline**, a nie jako aktualny golden master.
+Materiały graficzne w `qa/` dokumentują wcześniejszy przebieg testów Chrome i należy traktować je jako **historyczny baseline**, a nie aktualny golden master. Skrypt `qa/verify.mjs` jest utrzymywany zgodnie z bieżącym DOM; po zmianach wizualnych lub interakcyjnych należy uruchomić go ponownie i odświeżyć screenshoty oraz `results.json`.
 
 Przed finalnym wdrożeniem zalecane jest ponowne uruchomienie:
 

@@ -7,9 +7,28 @@
       name="description"
       content="Grupa TEB Edukacja — ponad 30 lat doświadczenia w edukacji. Poznaj naszą skalę, podmioty i zasięg działalności."
     />
+    <meta name="theme-color" content="#172f6b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="Grupa TEB Edukacja" />
+    <meta
+      property="og:title"
+      content="Grupa TEB Edukacja — Edukacja, która łączy możliwości."
+    />
+    <meta
+      property="og:description"
+      content="Ponad 30 lat doświadczenia w edukacji. Poznaj skalę, podmioty i zasięg działalności Grupy TEB Edukacja."
+    />
+    <meta name="twitter:card" content="summary" />
     <title>Grupa TEB Edukacja — Edukacja, która łączy możliwości.</title>
     <link rel="icon" href="assets/graphics/arrow_GTE.svg" />
-    <link rel="preload" as="image" href="assets/photos/approved-photo.png" />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/photos/hero-gte.avif"
+      type="image/avif"
+      fetchpriority="high"
+    />
     <link rel="stylesheet" href="css/tokens.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/layout.css" />
@@ -27,6 +46,8 @@
           class="brand__logo"
           src="assets/logo/logo_GTE.svg"
           alt="Grupa TEB Edukacja"
+          width="695"
+          height="40"
         />
       </a>
 
@@ -51,14 +72,6 @@
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <img
-          class="hero__photo"
-          src="assets/photos/approved-photo.png"
-          alt=""
-          fetchpriority="high"
-          decoding="async"
-        />
-
         <div class="hero__content shell shell--wide">
           <h1 id="hero-title">
             Edukacja, która<br />
@@ -105,7 +118,6 @@
               prowadzących niepubliczne technika dla młodzieży.
             </p>
           </div>
-          <!-- Optional full-width figure.about__photo for a team or headquarters photo. -->
         </div>
       </section>
 
@@ -194,13 +206,20 @@
                 class="group-system__logo"
                 src="assets/logo/logo_GTE.svg"
                 alt="Grupa TEB Edukacja"
+                width="695"
+                height="40"
               />
             </div>
 
             <div class="group-system__entities">
               <article class="entity" data-reveal>
                 <div class="entity__brand">
-                  <img src="assets/logo/logo_forteb.svg" alt="FORTEB" />
+                  <img
+                    src="assets/logo/logo_forteb.svg"
+                    alt="FORTEB"
+                    width="431"
+                    height="69"
+                  />
                 </div>
 
                 <p class="entity__description">
@@ -213,7 +232,12 @@
 
               <article class="entity" data-reveal>
                 <div class="entity__brand entity__brand--teb">
-                  <img src="assets/logo/logo_TEB.svg" alt="TEB Edukacja" />
+                  <img
+                    src="assets/logo/logo_TEB.svg"
+                    alt="TEB Edukacja"
+                    width="222"
+                    height="90"
+                  />
                 </div>
 
                 <p class="entity__description">
@@ -226,7 +250,12 @@
 
               <article class="entity" data-reveal>
                 <div class="entity__brand entity__brand--edicon">
-                  <img src="assets/logo/LOGO_EDICON.svg" alt="EDICON" />
+                  <img
+                    src="assets/logo/LOGO_EDICON.svg"
+                    alt="EDICON"
+                    width="794"
+                    height="206"
+                  />
                 </div>
 
                 <p class="entity__description">
@@ -279,19 +308,9 @@
                 decoding="async"
               />
 
-              <div
-                class="map__pins"
-                data-map-pins
-                aria-label="Miasta, w których działa TEB Edukacja"
-              ></div>
+              <div class="map__pins" data-map-pins aria-hidden="true"></div>
 
-              <div
-                class="map-tooltip"
-                id="map-tooltip"
-                role="tooltip"
-                data-map-tooltip
-                aria-hidden="true"
-              >
+              <div class="map-tooltip" data-map-tooltip aria-hidden="true">
                 <strong data-map-tooltip-label></strong>
               </div>
             </div>
@@ -531,7 +550,8 @@
           <img
             src="assets/logo/logo_GTE.svg"
             alt="Grupa TEB Edukacja"
-            width="230"
+            width="695"
+            height="40"
           />
         </a>
         <a class="to-top" href="#top"

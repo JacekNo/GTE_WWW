@@ -1,6 +1,12 @@
 # Visual & UX QA — GTE
 
-> **Status dokumentu:** baseline QA z 20.09.2026. Po tym przebiegu zaktualizowano m.in. treści, partnerów, kontakt, hero i strukturę mapy. Screenshoty i 41/41 PASS dokumentują stan bazowy i powinny zostać ponownie wygenerowane przed finalnym wdrożeniem.
+> **Finalny clean baseline — 23.09.2026:** automatyczny browser QA zakończony wynikiem **37/37 PASS**. Syntax checks, rendery kontrolne, brak overflow/cropped copy/broken assets, mapa, mobile menu, reduced motion, no-JS i hero AVIF — PASS.
+>
+> **Lighthouse desktop:** Performance 99, Accessibility 100, Best Practices 100, SEO 100; LCP 0.9 s, CLS 0.004, TBT 0 ms.
+>
+> **Lighthouse mobile (synthetic, lokalny Python HTTP server):** Performance 62, Accessibility 100, Best Practices 100, SEO 100; raportowany LCP 5.0 s i CLS 0.242. Kontrolny pomiar przez `PerformanceObserver` w stabilnym viewportcie 390 × 844 dał **CLS 0, FCP 104 ms, LCP 156 ms**. Mobilny wynik Lighthouse należy więc traktować jako konserwatywny wynik syntetycznego throttlingu na niekompresowanym serwerze testowym i ponownie zweryfikować po wdrożeniu na docelowym hostingu.
+
+> **Status dokumentu:** screenshoty i wynik 41/41 pochodzą z baseline QA z 20.09.2026 i są materiałem historycznym. Skrypt `verify.mjs` został zsynchronizowany z bieżącym DOM w ramach clean baseline 23.09.2026, ale screenshoty i `results.json` należy wygenerować ponownie przed uznaniem ich za aktualny golden master.
 
 20.09.2026 · Chrome 154 · lokalna strona HTTP · rzeczywiste rendery przeglądarki.
 
@@ -22,14 +28,14 @@ W 125% potwierdzono rzeczywisty `page zoom = 1.25` oraz `devicePixelRatio = 1.25
 
 ## Interakcje i dostępność
 
-**41/41 testów: PASS.** Automatyczne wyniki w [results.json](results.json), odtwarzalny scenariusz w [verify.mjs](verify.mjs).
+Historyczny przebieg z 20.09.2026 zakończył się wynikiem **41/41 PASS**. Plik [results.json](results.json) odnosi się do tego przebiegu. Bieżący scenariusz w [verify.mjs](verify.mjs) został zaktualizowany do aktualnej struktury mapy i nawigacji i powinien zostać uruchomiony ponownie po clean baseline.
 
 - Brak poziomego overflow, wewnętrznego ucięcia badanej treści, brakujących obrazów i fontów w czterech wymaganych szerokościach.
-- Hover, focus, Enter, Space, click/tap, utrzymanie wyboru po wyjściu kursora, podgląd innego miasta i powrót tooltipu do wybranego miasta, Escape oraz ARIA pressed/description.
+- Desktop: piny są informacyjne i reagują wyłącznie na hover kursora; nie mają semantyki przycisku, stanu `aria-pressed` ani trwałego zaznaczenia. Po opuszczeniu pina tooltip znika.
 - Wszystkie 46 tooltipów sprawdzono przy krawędziach mapy w każdej szerokości.
-- Sprawdzono hit target każdego z 46 pinów, w tym Śląsk. Otoczki nie przechwytują kliknięć w sąsiednie miasta; geometria położenia pinów pozostała bez zmian.
-- Na mobile dodatkowy natywny wybór miasta korzysta z tego samego stanu co mapa. [Wybrane miasto](map-mobile-selected.png).
-- Menu mobilne: pełne przykrycie viewportu, przewijanie na niskim ekranie, otwarcie, zamknięcie po wyborze sekcji, Escape z przywróceniem focusu oraz zawijanie Tab wewnątrz otwartej nawigacji. [Screenshot](menu-mobile.png).
+- Sprawdzono położenie wszystkich 46 markerów w czterech szerokościach viewportu. Markery pozostają w obrębie mapy; ich wizualne obszary mogą się nakładać w gęstych regionach, ponieważ nie są już kontrolkami interaktywnymi.
+- Mobile: tapnięcie pina nie wykonuje akcji. Natywny picker miasta podświetla wskazane miasto i pokazuje odpowiadający mu tooltip. [Wybrane miasto](map-mobile-selected.png).
+- Menu mobilne: pełne przykrycie viewportu, przewijanie na niskim ekranie, otwarcie, zamknięcie po wyborze sekcji, Escape z przywróceniem focusu oraz zawijanie Tab wewnątrz otwartej nawigacji. Aktualny test sprawdza również, czy strzałka przy „Kontakt” pozostaje bezpośrednio przy etykiecie. [Screenshot](menu-mobile.png).
 - Widoczny focus i skip link; obrys navy na białym tle i zielony na granacie. [Focus](keyboard-focus.png).
 - Reduced motion od razu pokazuje treść i wszystkie punkty, usuwa animacje i smooth scroll. [Screenshot](reduced-motion-mobile.png).
 - Wyłączony JavaScript: treść i nawigacja mobilna pozostają dostępne. [Screenshot](no-js-mobile.png).
@@ -38,11 +44,11 @@ W 125% potwierdzono rzeczywisty `page zoom = 1.25` oraz `devicePixelRatio = 1.25
 
 ## Hero i Visual QA
 
-Baseline QA obejmował wariant brand-only oraz wariant ze zdjęciem. Aktualny HTML korzysta z `assets/photos/approved-photo.png` jako warstwy hero, dlatego screenshoty bazowe mogą różnić się od bieżącego widoku.
+Baseline QA obejmował wariant brand-only oraz wariant ze zdjęciem. Aktualny HTML korzysta z `picture` i formatów AVIF / WebP / JPEG, dlatego screenshoty bazowe mogą różnić się od bieżącego widoku. Źródłowy `approved-photo.png` nie jest pobierany przez stronę.
 
-Po pierwszym renderze skorygowano linię hero, która przechodziła za CTA. Statystyki mają wyraźny poziom danych o ludziach i spokojniejszy poziom infrastruktury. Trzy podmioty mają wspólną linię oraz wyrównane logotypy i opisy; partnerzy tworzą otwarte pole znaków o różnych proporcjach. Mapa navy ma białe piny i granice, aktywny punkt i tooltip są zielone. Kontakt jest prostą sekcją dwóch kolumn, a na telefonie jedną kolumną.
+Po pierwszym renderze skorygowano linię hero, która przechodziła za CTA. Statystyki mają wyraźny poziom danych o ludziach i spokojniejszy poziom infrastruktury. Trzy podmioty mają wspólną linię oraz wyrównane logotypy i opisy; partnerzy tworzą otwarte pole znaków o różnych proporcjach. Mapa navy ma białe piny i granice, a chwilowo podświetlany punkt i tooltip są zielone. Kontakt jest prostą sekcją dwóch kolumn, a na telefonie jedną kolumną.
 
-Aktualna mapa ma geometrię w osobnym `assets/maps/poland-map.svg`, dane miast w `js/map-data.js` i interakcje w `js/map.js`. Motion pozostaje progressive enhancement; reduced motion go wyłącza.
+Aktualna mapa ma geometrię w osobnym `assets/maps/poland-map.svg`, dane miast w `js/map-data.js` i interakcje w `js/map.js`. Piny są nieinteraktywną warstwą informacyjną; na desktopie tooltip działa przez hover, a na mobile dostępny jest natywny picker. Motion pozostaje progressive enhancement; reduced motion go wyłącza.
 
 ## Ustalenia materiałowe
 
