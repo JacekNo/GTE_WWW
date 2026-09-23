@@ -22,7 +22,6 @@
     <meta name="twitter:card" content="summary" />
     <title>Grupa TEB Edukacja — Edukacja, która łączy możliwości.</title>
     <link rel="icon" href="assets/graphics/arrow_GTE.svg" />
-    <link rel="preload" as="image" href="assets/photos/approved-photo.png" />
     <link rel="stylesheet" href="css/tokens.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/layout.css" />
@@ -64,13 +63,19 @@
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <img
-          class="hero__photo"
-          src="assets/photos/approved-photo.png"
-          alt=""
-          fetchpriority="high"
-          decoding="async"
-        />
+        <picture class="hero__media">
+          <source srcset="assets/photos/hero-gte.avif" type="image/avif" />
+          <source srcset="assets/photos/hero-gte.webp" type="image/webp" />
+          <img
+            class="hero__photo"
+            src="assets/photos/hero-gte.jpg"
+            alt=""
+            width="1916"
+            height="821"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
 
         <div class="hero__content shell shell--wide">
           <h1 id="hero-title">
