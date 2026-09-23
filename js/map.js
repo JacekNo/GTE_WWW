@@ -21,7 +21,10 @@ export function setupMap(map) {
     const button = document.createElement("button");
     const xPercent = (city.x / MAP_VIEWBOX.width) * 100;
     const yPercent = (city.y / MAP_VIEWBOX.height) * 100;
-    const delay = Math.round(220 + (city.y / MAP_VIEWBOX.height) * 420);
+    const scatter =
+      (index * 137 + Math.round(city.x * 0.8) + Math.round(city.y * 0.35)) %
+      720;
+    const delay = 140 + scatter;
 
     button.type = "button";
     button.className = "map-city";

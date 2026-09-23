@@ -31,4 +31,7 @@
   --duration-base: 650ms;
   --header-height: 100px;
   --header-height-compact: 80px;
+  --measure-prose: 62ch;
+  --measure-support: 46ch;
+  --measure-card: 38ch;
 }

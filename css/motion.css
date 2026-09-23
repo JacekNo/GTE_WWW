@@ -19,7 +19,7 @@
 
 .has-motion .map-city {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.72);
+  transform: translate(-50%, -50%) scale(0.45);
 }
 
 .has-motion .map.is-active .map__graphic {
@@ -27,7 +27,7 @@
 }
 
 .has-motion .map.is-active .map-city {
-  animation: map-city-in 300ms var(--city-delay) var(--ease-out) forwards;
+  animation: map-city-in 560ms var(--city-delay) both;
 }
 
 @keyframes map-base-in {
@@ -38,7 +38,21 @@
 }
 
 @keyframes map-city-in {
-  to {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.45);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.16);
+  }
+
+  72% {
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }

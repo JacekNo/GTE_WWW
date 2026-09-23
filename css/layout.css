@@ -210,15 +210,14 @@
 }
 .about__copy {
   display: grid;
-  gap: 2rem;
+  gap: 1.4rem;
+  max-width: var(--measure-prose);
 }
 
 .about__support {
-  max-width: 52ch;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--gte-line);
+  max-width: 48ch;
   color: var(--gte-text);
-  font-size: clamp(1.1rem, 1.25vw, 1.25rem);
+  font-size: clamp(1.2rem, 1.45vw, 1.4rem);
   line-height: 1.5;
 }
 .about__photo {
@@ -264,7 +263,7 @@
 .stat dt {
   max-width: 22ch;
   color: var(--gte-text-on-navy-muted);
-  font-size: var(--body);
+  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
   line-height: 1.35;
 }
 
@@ -273,6 +272,7 @@
   margin: 0 0 1rem;
   font-size: clamp(3.25rem, 4.5vw, 4.5rem);
   font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
   letter-spacing: -0.045em;
   line-height: 1;
   white-space: nowrap;
@@ -338,7 +338,7 @@
 }
 .entity__description {
   color: var(--gte-text-muted);
-  max-width: 30ch;
+  max-width: var(--measure-card);
 }
 
 /* Reach */
@@ -379,7 +379,7 @@
 /* Partner field: native proportions, no cards or table borders. */
 .partners__heading {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
   margin-bottom: clamp(3.5rem, 6vw, 5.5rem);
 }
 
@@ -387,17 +387,23 @@
   margin: 0;
 }
 
+.partners__heading-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: end;
+  gap: 4rem;
+}
+
 .partners__heading h2 {
   max-width: 15ch;
 }
 
 .partners__intro {
-  max-width: 72ch;
+  max-width: var(--measure-support);
   color: var(--gte-text-muted);
   font-size: var(--body);
   line-height: 1.55;
 }
-
 .partner-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -589,7 +595,26 @@
     gap: 2.25rem 1.5rem;
   }
   .group-system__entities {
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .entity {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr);
+    gap: 2.5rem;
+    align-items: start;
+    padding-block: 2.25rem;
+    border-top: 1px solid var(--gte-line);
+  }
+
+  .entity__brand {
+    height: auto;
+    margin: 0;
+  }
+
+  .entity__description {
+    max-width: var(--measure-support);
   }
   .reach__shell {
     grid-template-columns: 1fr 1.4fr;
@@ -706,6 +731,11 @@
   }
 }
 @media (max-width: 540px) {
+  .entity {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-block: 2rem;
+  }
   .brand__logo {
     width: min(215px, 55vw);
   }
@@ -774,11 +804,6 @@
     width: 260px;
   }
 
-  .group-system__entities {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
   .entity__description {
     max-width: none;
   }
@@ -792,7 +817,15 @@
   }
 
   .reach__facts {
-    gap: 0.75rem;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .reach__facts div {
+    display: grid;
+    grid-template-columns: minmax(110px, auto) 1fr;
+    align-items: baseline;
+    gap: 1rem;
   }
 
   .reach__facts dt {
@@ -859,6 +892,10 @@
     height: auto;
     padding: 0;
     font-size: var(--body-small);
+  }
+  .partners__heading-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
 }
 

@@ -170,8 +170,85 @@ function setupMotion() {
 
   maps.forEach((map) => mapObserver.observe(map));
 }
+function setupCounters() {
+  const counters = [...document.querySelectorAll("[data-counter]")];
+  const numbersSection = document.querySelector("#liczby");
+
+  if (!counters.length || !numbersSection) return;
+
+  const formatter = new Intl.NumberFormat("pl-PL", {
+    maximumFractionDigits: 0,
+  });
+
+  const setFinalValues = () => {
+    counters.forEach((counter) => {
+      const target = Number(counter.dataset.counterValue);
+
+      if (!Number.isFinite(target)) return;
+
+      counter.textContent = formatter.format(target);
+    });
+  };
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    setFinalValues();
+    return;
+  }
+
+  const animateCounter = (element, delay = 0) => {
+    const target = Number(element.dataset.counterValue);
+
+    if (!Number.isFinite(target)) return;
+
+    const duration = target >= 100000 ? 1900 : 1700;
+
+    window.setTimeout(() => {
+      const startTime = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+
+        // easeOutCubic
+        const eased = Math.sin((progress * Math.PI) / 2);
+        const current = Math.round(target * eased);
+
+        element.textContent = formatter.format(current);
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          element.textContent = formatter.format(target);
+        }
+      };
+
+      requestAnimationFrame(tick);
+    }, delay);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries, observerInstance) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        counters.forEach((counter, index) => {
+          counter.textContent = "0";
+          animateCounter(counter, index * 60);
+        });
+
+        observerInstance.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.25,
+      rootMargin: "0px 0px -10% 0px",
+    },
+  );
+
+  observer.observe(numbersSection);
+}
 
 setupNavigation();
 setupScrollSpy();
 setupHeaderScrollState();
 setupMotion();
+setupCounters();

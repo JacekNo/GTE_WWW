@@ -115,7 +115,10 @@
         aria-labelledby="numbers-title"
       >
         <div class="shell shell--wide">
-          <div class="section-heading section-heading--light" data-reveal>
+          <div
+            class="section-heading section-heading--light section-heading--compact"
+            data-reveal
+          >
             <div>
               <p class="eyebrow">GTE w liczbach</p>
               <h2 id="numbers-title">Skala, za którą<br />stoją ludzie</h2>
@@ -133,27 +136,30 @@
             <dl class="numbers-field__lead">
               <div class="stat stat--lead" data-reveal>
                 <dt>absolwentów</dt>
-                <dd><span class="stat__prefix">ponad</span>280 000</dd>
+                <dd>
+                  <span class="stat__prefix">ponad</span>
+                  <span data-counter data-counter-value="280000">280 000</span>
+                </dd>
               </div>
             </dl>
 
             <dl class="numbers-field__people">
               <div class="stat" data-reveal>
                 <dt>uczniów techników i liceów</dt>
-                <dd><span class="stat__prefix">ponad</span>21 000</dd>
+                <dd><span class="stat__prefix">ponad</span><span data-counter data-counter-value="21000">21 000</span></dd>
               </div>
               <div class="stat" data-reveal>
                 <dt>słuchaczy szkół policealnych</dt>
-                <dd><span class="stat__prefix">ponad</span>21 000</dd>
+                <dd><span class="stat__prefix">ponad</span><span data-counter data-counter-value="21000">21 000</span></dd>
               </div>
               <div class="stat" data-reveal>
                 <dt>nauczycieli</dt>
-                <dd>4 000</dd>
+                <dd><span data-counter data-counter-value="4000">4 000</span></dd>
               </div>
               <div class="stat" data-reveal>
                 <dt>pracowników</dt>
                 <!-- TODO: podmienić na potwierdzoną liczbę pracowników. -->
-                <dd>0 000</dd>
+                <dd><span data-counter data-counter-value="2000">2 000</span></dd>
               </div>
             </dl>
           </div>
@@ -166,7 +172,7 @@
         aria-labelledby="structure-title"
       >
         <div class="shell">
-          <div class="section-heading" data-reveal>
+          <div class="section-heading section-heading--editorial" data-reveal>
             <div>
               <h2 id="structure-title">
                 Wspólny kierunek.<br />
@@ -175,8 +181,8 @@
             </div>
 
             <p>
-              Grupa TEB Edukacja skupia trzy samodzielne pod względem prawnym
-              i organizacyjnym podmioty, których kompetencje wzajemnie się
+              Grupa TEB Edukacja skupia trzy samodzielne pod względem prawnym i
+              organizacyjnym podmioty, których kompetencje wzajemnie się
               uzupełniają. Wspólnie rozwijają działalność edukacyjną oraz usługi
               wspierające szkoły, kadrę i organizacje związane z edukacją.
             </p>
@@ -312,18 +318,22 @@
         <div class="shell">
           <div class="partners__heading" data-reveal>
             <p class="eyebrow">Partnerzy</p>
-            <h2 id="partners-title">
-              Współpraca z markami<br />obecnymi w praktyce
-            </h2>
-            <p class="partners__intro">
-              Dzięki systematycznemu rozwojowi współpracy z partnerami, będącymi
-              liderami w branżach związanych z kierunkami prowadzonymi w naszych
-              szkołach i placówkach, oferujemy nie tylko standardowe świadectwa
-              ukończenia szkoły, ale też certyfikaty wydawane przez firmy
-              partnerskie.
-            </p>
-          </div>
 
+            <div class="partners__heading-grid">
+              <h2 id="partners-title">
+                Współpraca z markami<br />
+                obecnymi w praktyce
+              </h2>
+
+              <p class="partners__intro">
+                Dzięki systematycznemu rozwojowi współpracy z partnerami,
+                będącymi liderami w branżach związanych z kierunkami
+                prowadzonymi w naszych szkołach i placówkach, oferujemy nie
+                tylko standardowe świadectwa ukończenia szkoły, ale też
+                certyfikaty wydawane przez firmy partnerskie.
+              </p>
+            </div>
+          </div>
           <ul class="partner-list" aria-label="Lista partnerów" data-reveal>
             <li class="partner--semilac">
               <img
@@ -432,7 +442,6 @@
                 height="140"
               />
             </li>
-
           </ul>
         </div>
       </section>
