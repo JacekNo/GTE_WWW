@@ -19,12 +19,12 @@ check('Keyboard skip link + visible outline',await evaluate("document.activeElem
 // scrollbar, which changes SVG hit coordinates until the next input repaint.
 await evaluate("document.querySelector('[data-map]').scrollIntoView({block:'center',behavior:'instant'})");await pause(300);
 await cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:10,y:100});
-await pointer('[data-city="Warszawa"] ');
+await pointer('[data-city="Warszawa"]');
 check('Map hover label',await evaluate("document.querySelector('[data-map-tooltip-label]').textContent==='Warszawa' && document.querySelector('[data-map-tooltip]').getAttribute('aria-hidden')==='false'"));
-await pointer('[data-city="Warszawa"] ','click');
+await pointer('[data-city="Warszawa"]','click');
 await cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:10,y:100});await pause(100);
 check('Selection persists after pointer leaves',await evaluate("document.querySelector('[data-city=Warszawa]').getAttribute('aria-pressed')==='true' && document.querySelector('[data-map-tooltip-label]').textContent==='Warszawa'"));
-await pointer('[data-city="Poznań"] ');
+await pointer('[data-city="Poznań"]');
 check('Hover another city preserves selection',await evaluate("document.querySelector('[data-city=Warszawa]').getAttribute('aria-pressed')==='true' && document.querySelector('[data-map-tooltip-label]').textContent==='Poznań'"));
 await cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:10,y:100});await pause(100);
 check('Tooltip restores selected city',await evaluate("document.querySelector('[data-map-tooltip-label]').textContent==='Warszawa'"));
@@ -49,7 +49,7 @@ for(const [width,height] of [[1440,900],[1280,800],[768,1024],[390,844]]){
  const edges=await evaluate(`(async()=>{const bad=[];const map=document.querySelector('[data-map]');for(const city of map.querySelectorAll('.map-city')){city.focus({preventScroll:true});await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));const r=map.getBoundingClientRect(),t=map.querySelector('[data-map-tooltip]').getBoundingClientRect();if(t.left<r.left-1||t.right>r.right+1||t.top<r.top-1)bad.push(city.dataset.city);}document.activeElement.blur();return bad;})()`);
  check(`${width}: all 46 tooltip edge positions`,edges.length===0,edges);
  if(width===390){
-  await pointer('[data-city="Warszawa"] ','tap');
+  await pointer('[data-city="Warszawa"]','tap');
   check('Mobile tap selects',await evaluate("document.querySelector('[data-city=Warszawa]').getAttribute('aria-pressed')==='true'"));
   await evaluate("document.querySelector('.map-picker select').focus();document.querySelector('.map-picker select').value='Katowice';document.querySelector('.map-picker select').dispatchEvent(new Event('change',{bubbles:true}))");
   check('Mobile list selects Silesia city',await evaluate("document.querySelector('[data-city=Katowice]').getAttribute('aria-pressed')==='true' && document.querySelectorAll('.is-selected').length===1"));
@@ -57,6 +57,7 @@ for(const [width,height] of [[1440,900],[1280,800],[768,1024],[390,844]]){
   await evaluate("scrollTo({top:0,behavior:'instant'})");await pause(250);
   await pointer('.menu-toggle','tap');
   check('Mobile menu opens',await evaluate("document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='true' && document.body.classList.contains('menu-open')"));
+  check('Mobile contact arrow stays next to label',await evaluate("getComputedStyle(document.querySelector('.primary-nav .nav-contact')).justifyContent==='flex-start'"));
   await screenshot('menu-mobile');
   await key('Escape','Escape',27);
   check('Mobile Escape returns focus',await evaluate("document.activeElement.matches('.menu-toggle') && !document.body.classList.contains('menu-open')"));
