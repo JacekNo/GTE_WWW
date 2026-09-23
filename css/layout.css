@@ -656,7 +656,7 @@
     gap: 0.65rem;
   }
   .hero__content {
-    min-height: 780px;
+    min-height: max(780px, 100svh);
     padding-block: 10rem 4rem;
   }
   .about__grid {
@@ -709,7 +709,7 @@
   }
 
   .hero__content {
-    min-height: max(740px, 90svh);
+    min-height: max(740px, 100svh);
     padding-block: 9rem 3rem;
   }
 
