@@ -49,7 +49,7 @@ http://127.0.0.1:4173/
 - `css/map.css` — wygląd mapy, pinów, tooltipu i mobile picker.
 - `css/motion.css` — progressive enhancement animacji i reduced motion.
 - `js/main.js` — nawigacja, header, scrollspy, focus management i reveal.
-- `js/map.js` — interakcje mapy: piny, tooltip, wybór miasta i obsługa klawiatury oparta na natywnych przyciskach.
+- `js/map.js` — interakcje mapy: wizualne piny, tooltip na hover oraz picker miasta na mobile.
 - `js/map-data.js` — dane 46 miast i ich współrzędne.
 - `assets/maps/poland-map.svg` — geometria mapy Polski.
 
@@ -61,7 +61,7 @@ Mapa została rozdzielona na trzy warstwy:
 2. dane — `js/map-data.js`,
 3. interakcja — `js/map.js`.
 
-Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 markerów.
+Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 markerów. Piny są informacyjne: na desktopie pokazują nazwę miasta po najechaniu, nie mają stanu kliknięcia ani zachowania przycisku. Na mobile wybór miasta odbywa się przez natywny `select`.
 
 ## Hero
 
@@ -72,6 +72,8 @@ assets/photos/approved-photo.png
 ```
 
 Zdjęcie jest warstwą wizualną hero. Tekst i CTA pozostają niezależne od assetu.
+
+**Do optymalizacji produkcyjnej:** przygotować responsywne warianty AVIF/WebP i zastąpić pojedynczy PNG elementem `picture/srcset`.
 
 ## Partnerzy
 
@@ -122,10 +124,14 @@ Projekt zawiera m.in.:
 - skip link,
 - focus-visible,
 - obsługę menu klawiaturą i Escape,
-- natywne przyciski dla pinów mapy z obsługą Tab / Enter / Space / Escape,
+- informacyjne piny mapy bez fałszywej semantyki przycisku,
 - natywny picker miasta na mobile,
 - `prefers-reduced-motion`,
 - wersję strony działającą również bez JavaScriptu.
+
+## Metadata / SEO
+
+W `index.html` znajdują się bezpieczne metadane niewymagające finalnej domeny: description, theme color oraz podstawowe Open Graph. Po ustaleniu docelowego adresu należy uzupełnić canonical, `og:url`, absolutny `og:image` i dane `Organization` w JSON-LD.
 
 ## QA
 
