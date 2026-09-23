@@ -65,15 +65,17 @@ Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 marke
 
 ## Hero
 
-Aktualny wariant używa:
+Hero korzysta z elementu `picture` i trzech produkcyjnych formatów:
 
 ```text
-assets/photos/approved-photo.png
+assets/photos/hero-gte.avif
+assets/photos/hero-gte.webp
+assets/photos/hero-gte.jpg
 ```
 
-Zdjęcie jest warstwą wizualną hero. Tekst i CTA pozostają niezależne od assetu.
+Źródłowy `assets/photos/approved-photo.png` pozostaje w repo jako materiał roboczy, ale nie jest pobierany przez stronę. Przeglądarka wybiera AVIF, następnie WebP, a JPEG pełni rolę fallbacku. Zdjęcie zachowuje oryginalne wymiary 1916 × 821 px i ten sam sposób kadrowania przez `object-fit: cover`.
 
-**Do optymalizacji produkcyjnej:** przygotować responsywne warianty AVIF/WebP i zastąpić pojedynczy PNG elementem `picture/srcset`.
+Nie używamy mniejszych wariantów szerokości dla tego hero: źródło jest bardzo panoramiczne, a kontener na mobile jest wysoki. Wariant 960 px miałby tylko około 411 px wysokości i byłby niepotrzebnie skalowany w górę. Przy AVIF około 170 KB pełna rozdzielczość daje lepszy kompromis jakości i transferu.
 
 ## Partnerzy
 
