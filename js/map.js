@@ -31,7 +31,7 @@ export function setupMap(map) {
     button.dataset.city = city.name;
     button.setAttribute("aria-label", city.name);
     button.setAttribute("aria-pressed", "false");
-    button.tabIndex = index === 0 ? 0 : -1;
+    button.tabIndex = 0;
     button.style.setProperty("--x", `${xPercent.toFixed(4)}%`);
     button.style.setProperty("--y", `${yPercent.toFixed(4)}%`);
     button.style.setProperty("--city-delay", `${delay}ms`);
@@ -45,12 +45,6 @@ export function setupMap(map) {
 
   let selectedPin = null;
   let transientPin = null;
-
-  const setRovingTabIndex = (activePin) => {
-    pins.forEach((pin) => {
-      pin.tabIndex = pin === activePin ? 0 : -1;
-    });
-  };
 
   const positionTooltip = (pin) => {
     const stageRect = stage.getBoundingClientRect();
@@ -132,7 +126,6 @@ export function setupMap(map) {
       selectedPin.classList.add("is-selected");
       selectedPin.setAttribute("aria-pressed", "true");
       picker.value = selectedPin.dataset.city;
-      setRovingTabIndex(selectedPin);
     } else {
       picker.value = "";
     }
@@ -156,7 +149,6 @@ export function setupMap(map) {
   pinsLayer.addEventListener("focusin", (event) => {
     const pin = event.target.closest(".map-city");
     if (!pin) return;
-    setRovingTabIndex(pin);
     setTransientPin(pin);
   });
 
@@ -173,38 +165,12 @@ export function setupMap(map) {
   });
 
   pinsLayer.addEventListener("keydown", (event) => {
-    const currentPin = event.target.closest(".map-city");
-    if (!currentPin) return;
+    const pin = event.target.closest(".map-city");
+    if (!pin || event.key !== "Escape") return;
 
-    const currentIndex = pins.indexOf(currentPin);
-    const step = {
-      ArrowRight: 1,
-      ArrowDown: 1,
-      ArrowLeft: -1,
-      ArrowUp: -1,
-    }[event.key];
-
-    if (step) {
-      event.preventDefault();
-      const nextIndex = (currentIndex + step + pins.length) % pins.length;
-      setRovingTabIndex(pins[nextIndex]);
-      pins[nextIndex].focus();
-      return;
-    }
-
-    if (event.key === "Home" || event.key === "End") {
-      event.preventDefault();
-      const targetPin = event.key === "Home" ? pins[0] : pins.at(-1);
-      setRovingTabIndex(targetPin);
-      targetPin.focus();
-      return;
-    }
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      if (selectedPin) selectPin(selectedPin);
-      clearTransientPin();
-    }
+    event.preventDefault();
+    if (selectedPin) selectPin(selectedPin);
+    clearTransientPin();
   });
 
   picker.addEventListener("change", () => {
