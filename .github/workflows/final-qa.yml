@@ -41,8 +41,8 @@ jobs:
         run: |
           google-chrome --headless=new --no-sandbox --disable-dev-shm-usage             --remote-debugging-port=9223             --user-data-dir=/tmp/gte-chrome             http://127.0.0.1:4173/ > /tmp/gte-chrome.log 2>&1 &
           echo $! > /tmp/gte-chrome.pid
-          for i in {1..20}; do
-            if curl --silent --fail http://127.0.0.1:9223/json > /dev/null; then
+          for i in {1..45}; do
+            if curl --silent --fail http://127.0.0.1:9223/json/version > /dev/null; then
               exit 0
             fi
             sleep 1
