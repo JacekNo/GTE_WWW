@@ -18,7 +18,7 @@ export function setupMap(map) {
   if (!stage || !pinsLayer || !picker || !tooltip || !tooltipLabel) return;
 
   const pins = MAP_CITIES.map((city, index) => {
-    const button = document.createElement("button");
+    const marker = document.createElement("span");
     const xPercent = (city.x / MAP_VIEWBOX.width) * 100;
     const yPercent = (city.y / MAP_VIEWBOX.height) * 100;
     const scatter =
@@ -26,25 +26,22 @@ export function setupMap(map) {
       720;
     const delay = 140 + scatter;
 
-    button.type = "button";
-    button.className = "map-city";
-    button.dataset.city = city.name;
-    button.setAttribute("aria-label", city.name);
-    button.setAttribute("aria-pressed", "false");
-    button.tabIndex = 0;
-    button.style.setProperty("--x", `${xPercent.toFixed(4)}%`);
-    button.style.setProperty("--y", `${yPercent.toFixed(4)}%`);
-    button.style.setProperty("--city-delay", `${delay}ms`);
-    button.innerHTML = PIN_SVG;
+    marker.className = "map-city";
+    marker.dataset.city = city.name;
+    marker.setAttribute("aria-hidden", "true");
+    marker.style.setProperty("--x", `${xPercent.toFixed(4)}%`);
+    marker.style.setProperty("--y", `${yPercent.toFixed(4)}%`);
+    marker.style.setProperty("--city-delay", `${delay}ms`);
+    marker.innerHTML = PIN_SVG;
 
-    pinsLayer.append(button);
+    pinsLayer.append(marker);
     picker.add(new Option(city.name, city.name));
 
-    return button;
+    return marker;
   });
 
-  let selectedPin = null;
-  let transientPin = null;
+  let hoveredPin = null;
+  let pickerPin = null;
 
   const positionTooltip = (pin) => {
     const stageRect = stage.getBoundingClientRect();
@@ -77,8 +74,6 @@ export function setupMap(map) {
     if (!pin) return;
 
     tooltipLabel.textContent = pin.dataset.city;
-    pins.forEach((item) => item.removeAttribute("aria-describedby"));
-    pin.setAttribute("aria-describedby", tooltip.id);
     tooltip.classList.add("is-visible");
     tooltip.setAttribute("aria-hidden", "false");
     positionTooltip(pin);
@@ -87,113 +82,62 @@ export function setupMap(map) {
   const hideTooltip = () => {
     tooltip.classList.remove("is-visible", "is-below");
     tooltip.setAttribute("aria-hidden", "true");
-    pins.forEach((item) => item.removeAttribute("aria-describedby"));
   };
 
-  const refreshTooltip = () => {
-    const activePin = transientPin || selectedPin;
-    if (activePin) showTooltip(activePin);
+  const setHoveredPin = (pin) => {
+    if (hoveredPin === pin) return;
+
+    hoveredPin?.classList.remove("is-highlighted");
+    hoveredPin = pin;
+    hoveredPin?.classList.add("is-highlighted");
+
+    if (hoveredPin) showTooltip(hoveredPin);
+  };
+
+  const clearHoveredPin = (pin) => {
+    if (pin && hoveredPin !== pin) return;
+
+    hoveredPin?.classList.remove("is-highlighted");
+    hoveredPin = null;
+
+    if (pickerPin) showTooltip(pickerPin);
     else hideTooltip();
   };
 
-  const setTransientPin = (pin) => {
-    if (transientPin && transientPin !== pin) {
-      transientPin.classList.remove("is-highlighted");
-    }
+  const setPickerPin = (pin) => {
+    pickerPin?.classList.remove("is-picker-selected");
+    pickerPin = pin;
+    pickerPin?.classList.add("is-picker-selected");
 
-    transientPin = pin;
-    transientPin?.classList.add("is-highlighted");
-    refreshTooltip();
-  };
-
-  const clearTransientPin = (pin = null) => {
-    if (pin && transientPin !== pin) return;
-
-    transientPin?.classList.remove("is-highlighted");
-    transientPin = null;
-    refreshTooltip();
-  };
-
-  const selectPin = (pin) => {
-    const nextPin = selectedPin === pin ? null : pin;
-
-    selectedPin?.classList.remove("is-selected");
-    selectedPin?.setAttribute("aria-pressed", "false");
-
-    selectedPin = nextPin;
-
-    if (selectedPin) {
-      selectedPin.classList.add("is-selected");
-      selectedPin.setAttribute("aria-pressed", "true");
-      picker.value = selectedPin.dataset.city;
-    } else {
-      picker.value = "";
-    }
-
-    refreshTooltip();
+    if (pickerPin) showTooltip(pickerPin);
+    else hideTooltip();
   };
 
   pinsLayer.addEventListener("pointerover", (event) => {
     if (event.pointerType && event.pointerType !== "mouse") return;
+
     const pin = event.target.closest(".map-city");
-    if (pin) setTransientPin(pin);
+    if (pin) setHoveredPin(pin);
   });
 
   pinsLayer.addEventListener("pointerout", (event) => {
     if (event.pointerType && event.pointerType !== "mouse") return;
+
     const pin = event.target.closest(".map-city");
     if (!pin || pin.contains(event.relatedTarget)) return;
-    clearTransientPin(pin);
-  });
 
-  pinsLayer.addEventListener("focusin", (event) => {
-    const pin = event.target.closest(".map-city");
-    if (!pin) return;
-    setTransientPin(pin);
-  });
-
-  pinsLayer.addEventListener("focusout", (event) => {
-    const pin = event.target.closest(".map-city");
-    if (!pin) return;
-    clearTransientPin(pin);
-  });
-
-  pinsLayer.addEventListener("click", (event) => {
-    const pin = event.target.closest(".map-city");
-    if (!pin) return;
-    selectPin(pin);
-  });
-
-  pinsLayer.addEventListener("keydown", (event) => {
-    const pin = event.target.closest(".map-city");
-    if (!pin || event.key !== "Escape") return;
-
-    event.preventDefault();
-    if (selectedPin) selectPin(selectedPin);
-    clearTransientPin();
+    clearHoveredPin(pin);
   });
 
   picker.addEventListener("change", () => {
     const pin = pins.find((item) => item.dataset.city === picker.value) || null;
-
-    if (!pin) {
-      if (selectedPin) selectPin(selectedPin);
-      return;
-    }
-
-    if (selectedPin !== pin) selectPin(pin);
-    showTooltip(pin);
-  });
-
-  map.addEventListener("click", (event) => {
-    if (event.target.closest(".map-city, .map-picker")) return;
-    if (selectedPin) selectPin(selectedPin);
+    setPickerPin(pin);
   });
 
   window.addEventListener(
     "resize",
     () => {
-      const activePin = transientPin || selectedPin;
+      const activePin = hoveredPin || pickerPin;
       if (activePin) positionTooltip(activePin);
     },
     { passive: true },
