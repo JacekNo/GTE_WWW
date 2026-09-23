@@ -208,7 +208,7 @@ function setupCounters() {
       const tick = (now) => {
         const progress = Math.min((now - startTime) / duration, 1);
 
-        // easeOutCubic
+        // easeOutSine
         const eased = Math.sin((progress * Math.PI) / 2);
         const current = Math.round(target * eased);
 
