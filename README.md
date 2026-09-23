@@ -65,7 +65,7 @@ Dzięki temu HTML nie przechowuje geometrii SVG ani ręcznie zapisanych 46 marke
 
 ## Hero
 
-Hero korzysta z elementu `picture` i trzech produkcyjnych formatów:
+Hero jest dekoracyjnym tłem CSS i korzysta z `image-set()` oraz trzech produkcyjnych formatów:
 
 ```text
 assets/photos/hero-gte.avif
@@ -73,7 +73,7 @@ assets/photos/hero-gte.webp
 assets/photos/hero-gte.jpg
 ```
 
-Źródłowy `assets/photos/approved-photo.png` pozostaje w repo jako materiał roboczy, ale nie jest pobierany przez stronę. Przeglądarka wybiera AVIF, następnie WebP, a JPEG pełni rolę fallbacku. Zdjęcie zachowuje oryginalne wymiary 1916 × 821 px i ten sam sposób kadrowania przez `object-fit: cover`.
+Źródłowy `assets/photos/approved-photo.png` pozostaje w repo jako materiał roboczy, ale nie jest pobierany przez stronę. Przeglądarka wybiera AVIF, następnie WebP, a JPEG pełni rolę fallbacku. AVIF jest preloadowany jako asset hero, a kadr pozostaje ten sam dzięki `background-size: cover` i `background-position`.
 
 Nie używamy mniejszych wariantów szerokości dla tego hero: źródło jest bardzo panoramiczne, a kontener na mobile jest wysoki. Wariant 960 px miałby tylko około 411 px wysokości i byłby niepotrzebnie skalowany w górę. Przy AVIF około 170 KB pełna rozdzielczość daje lepszy kompromis jakości i transferu.
 
