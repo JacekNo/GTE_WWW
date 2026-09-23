@@ -38,7 +38,7 @@ Historyczny przebieg z 20.09.2026 zakończył się wynikiem **41/41 PASS**. Plik
 
 ## Hero i Visual QA
 
-Baseline QA obejmował wariant brand-only oraz wariant ze zdjęciem. Aktualny HTML korzysta z `assets/photos/approved-photo.png` jako warstwy hero, dlatego screenshoty bazowe mogą różnić się od bieżącego widoku.
+Baseline QA obejmował wariant brand-only oraz wariant ze zdjęciem. Aktualny HTML korzysta z `picture` i formatów AVIF / WebP / JPEG, dlatego screenshoty bazowe mogą różnić się od bieżącego widoku. Źródłowy `approved-photo.png` nie jest pobierany przez stronę.
 
 Po pierwszym renderze skorygowano linię hero, która przechodziła za CTA. Statystyki mają wyraźny poziom danych o ludziach i spokojniejszy poziom infrastruktury. Trzy podmioty mają wspólną linię oraz wyrównane logotypy i opisy; partnerzy tworzą otwarte pole znaków o różnych proporcjach. Mapa navy ma białe piny i granice, a chwilowo podświetlany punkt i tooltip są zielone. Kontakt jest prostą sekcją dwóch kolumn, a na telefonie jedną kolumną.
 
