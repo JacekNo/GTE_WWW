@@ -28,7 +28,6 @@ export function setupMap(map) {
 
     marker.className = "map-city";
     marker.dataset.city = city.name;
-    marker.setAttribute("aria-hidden", "true");
     marker.style.setProperty("--x", `${xPercent.toFixed(4)}%`);
     marker.style.setProperty("--y", `${yPercent.toFixed(4)}%`);
     marker.style.setProperty("--city-delay", `${delay}ms`);
@@ -75,13 +74,11 @@ export function setupMap(map) {
 
     tooltipLabel.textContent = pin.dataset.city;
     tooltip.classList.add("is-visible");
-    tooltip.setAttribute("aria-hidden", "false");
     positionTooltip(pin);
   };
 
   const hideTooltip = () => {
     tooltip.classList.remove("is-visible", "is-below");
-    tooltip.setAttribute("aria-hidden", "true");
   };
 
   const setHoveredPin = (pin) => {
