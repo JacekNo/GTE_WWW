@@ -49,7 +49,7 @@ http://127.0.0.1:4173/
 - `css/map.css` — wygląd mapy, pinów, tooltipu i mobile picker.
 - `css/motion.css` — progressive enhancement animacji i reduced motion.
 - `js/main.js` — nawigacja, header, scrollspy, focus management i reveal.
-- `js/map.js` — interakcje mapy: piny, tooltip, selection i keyboard navigation.
+- `js/map.js` — interakcje mapy: piny, tooltip, wybór miasta i obsługa klawiatury oparta na natywnych przyciskach.
 - `js/map-data.js` — dane 46 miast i ich współrzędne.
 - `assets/maps/poland-map.svg` — geometria mapy Polski.
 
@@ -93,12 +93,11 @@ Dla iSpot używany jest tymczasowy fallback tekstowy. Przed finalnym wdrożeniem
 
 ## Dane do potwierdzenia
 
-W sekcji „GTE w liczbach” pozostają dwa jawne placeholdery:
+W sekcji „GTE w liczbach” pozostaje jeden jawny placeholder:
 
-- liczba szkół policealnych,
-- liczba szkół średnich.
+- liczba pracowników.
 
-W `index.html` są oznaczone komentarzem `TODO`. Nie należy traktować wartości `xx` jako danych produkcyjnych.
+W `index.html` wartość `0 000` jest oznaczona komentarzem `TODO` i nie należy traktować jej jako danych produkcyjnych.
 
 ## Kontakt
 
@@ -123,14 +122,14 @@ Projekt zawiera m.in.:
 - skip link,
 - focus-visible,
 - obsługę menu klawiaturą i Escape,
-- roving tabindex na mapie,
+- natywne przyciski dla pinów mapy z obsługą Tab / Enter / Space / Escape,
 - natywny picker miasta na mobile,
 - `prefers-reduced-motion`,
 - wersję strony działającą również bez JavaScriptu.
 
 ## QA
 
-Materiały w `qa/` dokumentują wcześniejszy pełny przebieg testów Chrome. Po późniejszych zmianach treści, partnerów, kontaktu i assetów traktuj screenshoty jako **baseline**, a nie jako aktualny golden master.
+Materiały graficzne w `qa/` dokumentują wcześniejszy przebieg testów Chrome i należy traktować je jako **historyczny baseline**, a nie aktualny golden master. Skrypt `qa/verify.mjs` jest utrzymywany zgodnie z bieżącym DOM; po zmianach wizualnych lub interakcyjnych należy uruchomić go ponownie i odświeżyć screenshoty oraz `results.json`.
 
 Przed finalnym wdrożeniem zalecane jest ponowne uruchomienie:
 
