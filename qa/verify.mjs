@@ -66,7 +66,7 @@ await screenshot('reduced-motion-mobile',true);
 await cdp('Emulation.setEmulatedMedia',{features:[]});
 for(const [width,height] of [[1440,900],[390,844]]){
  await viewport(width,height,width===390);await navigate();await pause(200);
- check(`${width}: photo hero loads and stays within viewport`,await evaluate("document.querySelector('.hero__photo').naturalWidth>0 && document.documentElement.scrollWidth<=innerWidth && getComputedStyle(document.querySelector('.hero'),'::before').backgroundImage!=='none'"));
+ check(`${width}: optimized photo hero loads and stays within viewport`,await evaluate("document.querySelector('.hero__photo').naturalWidth>0 && document.querySelector('.hero__photo').currentSrc.includes('hero-gte.avif') && document.documentElement.scrollWidth<=innerWidth && getComputedStyle(document.querySelector('.hero'),'::before').backgroundImage!=='none'"));
  await screenshot(`hero-photo-${width}`);
 }
 await viewport(1440,900);await navigate();
