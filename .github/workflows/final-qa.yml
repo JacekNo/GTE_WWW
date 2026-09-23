@@ -1,0 +1,107 @@
+name: Final QA
+
+on:
+  push:
+    branches:
+      - refactor/clean-baseline
+    paths:
+      - ".github/workflows/final-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: refactor/clean-baseline
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Start local server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/gte-server.log 2>&1 &
+          echo $! > /tmp/gte-server.pid
+          sleep 2
+          curl --fail http://127.0.0.1:4173/ > /dev/null
+
+      - name: Start Chrome for CDP QA
+        run: |
+          google-chrome --headless=new --no-sandbox --disable-dev-shm-usage             --remote-debugging-port=9223             --user-data-dir=/tmp/gte-chrome             http://127.0.0.1:4173/ > /tmp/gte-chrome.log 2>&1 &
+          echo $! > /tmp/gte-chrome.pid
+          for i in {1..20}; do
+            if curl --silent --fail http://127.0.0.1:9223/json > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Chrome CDP did not start"
+          cat /tmp/gte-chrome.log
+          exit 1
+
+      - name: Syntax checks
+        run: |
+          node --check js/main.js
+          node --check js/map.js
+          node --check qa/verify.mjs
+
+      - name: Full browser QA
+        run: node qa/verify.mjs
+
+      - name: Render QA screenshots
+        run: node qa/render.mjs
+
+      - name: Run Lighthouse desktop
+        run: |
+          npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/             --quiet             --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage"             --preset=desktop             --output=json             --output-path=/tmp/lighthouse-desktop.json
+          node -e '
+            const r=require("/tmp/lighthouse-desktop.json");
+            const c=r.categories;
+            console.log("LIGHTHOUSE_DESKTOP",
+              JSON.stringify({
+                performance:Math.round(c.performance.score*100),
+                accessibility:Math.round(c.accessibility.score*100),
+                bestPractices:Math.round(c["best-practices"].score*100),
+                seo:Math.round(c.seo.score*100),
+                lcp:r.audits["largest-contentful-paint"].displayValue,
+                cls:r.audits["cumulative-layout-shift"].displayValue,
+                tbt:r.audits["total-blocking-time"].displayValue
+              })
+            );
+          '
+
+      - name: Run Lighthouse mobile
+        run: |
+          npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/             --quiet             --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage"             --output=json             --output-path=/tmp/lighthouse-mobile.json
+          node -e '
+            const r=require("/tmp/lighthouse-mobile.json");
+            const c=r.categories;
+            console.log("LIGHTHOUSE_MOBILE",
+              JSON.stringify({
+                performance:Math.round(c.performance.score*100),
+                accessibility:Math.round(c.accessibility.score*100),
+                bestPractices:Math.round(c["best-practices"].score*100),
+                seo:Math.round(c.seo.score*100),
+                lcp:r.audits["largest-contentful-paint"].displayValue,
+                cls:r.audits["cumulative-layout-shift"].displayValue,
+                tbt:r.audits["total-blocking-time"].displayValue
+              })
+            );
+          '
+
+      - name: Upload QA artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-qa
+          path: |
+            qa/*.png
+            qa/results.json
+            /tmp/lighthouse-desktop.json
+            /tmp/lighthouse-mobile.json
