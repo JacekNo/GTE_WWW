@@ -1,4 +1,4 @@
-/* Interactive reach map ---------------------------------------------------- */
+/* Reach map --------------------------------------------------------------- */
 .map {
   width: 100%;
   isolation: isolate;
@@ -31,9 +31,6 @@
   place-items: center;
   width: 28px;
   height: 28px;
-  padding: 0;
-  border: 0;
-  background: transparent;
   color: #f7f8fb;
   transform: translate(-50%, -50%);
   transform-origin: center;
@@ -64,27 +61,17 @@
     transform var(--duration-fast) var(--ease-out);
 }
 
-.map-city:is(:hover, :focus-visible, .is-highlighted, .is-selected) {
+.map-city:is(.is-highlighted, .is-picker-selected) {
   color: var(--gte-green);
 }
 
-.map-city:is(:hover, :focus-visible, .is-highlighted, .is-selected)::after {
+.map-city:is(.is-highlighted, .is-picker-selected)::after {
   opacity: 0.8;
   transform: scale(1);
 }
 
-.map-city:is(:hover, :focus-visible, .is-highlighted, .is-selected) .map-city__glyph {
+.map-city:is(.is-highlighted, .is-picker-selected) .map-city__glyph {
   transform: scale(1.14);
-}
-
-.map-city:focus-visible {
-  outline: none;
-}
-
-.map-city:focus-visible::after {
-  border-color: var(--gte-white);
-  border-width: 2.5px;
-  opacity: 1;
 }
 
 .map-tooltip {
