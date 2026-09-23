@@ -6,6 +6,11 @@ on:
       - refactor/clean-baseline
     paths:
       - ".github/workflows/final-qa.yml"
+      - "qa/verify.mjs"
+      - "qa/render.mjs"
+      - "index.html"
+      - "css/**"
+      - "js/**"
 
 permissions:
   contents: read
