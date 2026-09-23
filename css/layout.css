@@ -51,14 +51,16 @@
   font-weight: var(--weight-medium);
 }
 .primary-nav a {
-  position: relative;
   padding-block: 0.5rem;
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--duration-fast) var(--ease-out);
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color var(--duration-fast) var(--ease-out);
 }
 .primary-nav a:hover,
 .primary-nav a.is-active {
-  border-bottom-color: currentColor;
+  text-decoration-color: currentColor;
 }
 .primary-nav .nav-contact {
   display: flex;
@@ -183,7 +185,7 @@
   transform: translateY(4px);
 }
 
-/* About: optional team / headquarters photograph. */
+/* About */
 .about__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -834,9 +836,6 @@
     grid-column: 1 / -1;
   }
 
-  .site-footer p {
-    max-width: 18ch;
-  }
 }
 
 @media (max-width: 800px) {
