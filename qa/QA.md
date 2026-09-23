@@ -27,7 +27,7 @@ Historyczny przebieg z 20.09.2026 zakończył się wynikiem **41/41 PASS**. Plik
 - Brak poziomego overflow, wewnętrznego ucięcia badanej treści, brakujących obrazów i fontów w czterech wymaganych szerokościach.
 - Desktop: piny są informacyjne i reagują wyłącznie na hover kursora; nie mają semantyki przycisku, stanu `aria-pressed` ani trwałego zaznaczenia. Po opuszczeniu pina tooltip znika.
 - Wszystkie 46 tooltipów sprawdzono przy krawędziach mapy w każdej szerokości.
-- Sprawdzono hit target każdego z 46 pinów, w tym Śląsk. Otoczki nie przechwytują kliknięć w sąsiednie miasta; geometria położenia pinów pozostała bez zmian.
+- Sprawdzono położenie wszystkich 46 markerów w czterech szerokościach viewportu. Markery pozostają w obrębie mapy; ich wizualne obszary mogą się nakładać w gęstych regionach, ponieważ nie są już kontrolkami interaktywnymi.
 - Mobile: tapnięcie pina nie wykonuje akcji. Natywny picker miasta podświetla wskazane miasto i pokazuje odpowiadający mu tooltip. [Wybrane miasto](map-mobile-selected.png).
 - Menu mobilne: pełne przykrycie viewportu, przewijanie na niskim ekranie, otwarcie, zamknięcie po wyborze sekcji, Escape z przywróceniem focusu oraz zawijanie Tab wewnątrz otwartej nawigacji. Aktualny test sprawdza również, czy strzałka przy „Kontakt” pozostaje bezpośrednio przy etykiecie. [Screenshot](menu-mobile.png).
 - Widoczny focus i skip link; obrys navy na białym tle i zielony na granacie. [Focus](keyboard-focus.png).
