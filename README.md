@@ -93,15 +93,7 @@ Aktualna lista w UI obejmuje:
 - InsERT,
 - MSI Polska.
 
-Dla iSpot używany jest tymczasowy fallback tekstowy. Przed finalnym wdrożeniem należy podmienić go na oficjalny asset partnera.
-
-## Dane do potwierdzenia
-
-W sekcji „GTE w liczbach” pozostaje jeden jawny placeholder:
-
-- liczba pracowników.
-
-W `index.html` wartość `0 000` jest oznaczona komentarzem `TODO` i nie należy traktować jej jako danych produkcyjnych.
+Dla iSpot używany jest plik .png.
 
 ## Kontakt
 
